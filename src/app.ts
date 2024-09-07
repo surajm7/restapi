@@ -1,27 +1,30 @@
-import { config } from 'dotenv';
-import express, { NextFunction,Request,Response } from 'express'
-import {HttpError} from "http-errors";
+import express, { NextFunction, Request, Response } from "express";
+import cors from "cors";
+import globalErrorHandler from "./middlewares/globalErrorHandler";
+import userRouter from "./user/userRouter";
+import bookRouter from "./book/bookRouter";
+import { config } from "./config/config";
 
-const app =express();
+const app = express();
 
-app.get('/',(req,res,next)=>{
-    throw new Error("something went wrong");
-   
-    res.json({message:"welcome to elib api"});
+app.use(
+    cors({
+        origin: config.frontendDomain,
+    })
+);
 
-})
+app.use(express.json());
 
-//Global Error Handler
+// Routes
+// Http methods: GET, POST, PUT, PATCH, DELETE
+app.get("/", (req, res, next) => {
+    res.json({ message: "Welcome to elib apis" });
+});
 
-// app.use((err:HttpError,req:Request,res:Response,next:NextFunction)=>{
-//     const statusCode=err.statusCode||500;
-//     return res.status(statusCode).json({
-//         message:err.message,
-//     errorStack:config.env==="devlopment"?err.stack:"",
-//         // errorStack:err.stack,
-//     })
-// })
+app.use("/api/users", userRouter);
+app.use("/api/books", bookRouter);
 
-
+// Global error handler
+app.use(globalErrorHandler);
 
 export default app;

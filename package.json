@@ -13,7 +13,7 @@
     "api",
     "express"
   ],
-  "author": "Rakesh K <rakesh@codersgyan.com>",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
