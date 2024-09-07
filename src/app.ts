@@ -6,7 +6,7 @@ const app =express();
 
 app.get('/',(req,res,next)=>{
     throw new Error("something went wrong");
-    throw error;
+   
     res.json({message:"welcome to elib api"});
 
 })
